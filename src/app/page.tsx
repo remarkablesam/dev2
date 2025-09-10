@@ -43,6 +43,8 @@ import { FaTrash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaTimesCircle } from "react-icons/fa";
 import { FaCheckCircle as FaCheckCircleSolid } from "react-icons/fa";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 
 // Course data
 const courses = {
@@ -488,6 +490,7 @@ export default function Home() {
                 DevLearn Pro
               </span>
             </div>
+            {/* Desktop Nav */}
             <nav className="hidden md:flex space-x-6">
               {["home", "courses", "dashboard", "certificate", "about"].map((section) => (
                 <button
@@ -509,6 +512,42 @@ export default function Home() {
                 Admin
               </button>
             </nav>
+            {/* Mobile Nav */}
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger className="p-2 rounded-md border bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-600"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </SheetTrigger>
+                <SheetContent side="left" className="p-0 w-64 backdrop-blur-md bg-white/60">
+                  <div className="flex flex-col h-full">
+                    <div className="p-4 border-b">
+                      <span className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">DevLearn Pro</span>
+                    </div>
+                    <nav className="flex-1 p-4 space-y-2">
+                      {["home", "courses", "dashboard", "certificate", "about"].map((section) => (
+                        <button
+                          key={section}
+                          onClick={() => showSection(section)}
+                          className={`w-full text-left px-3 py-2 rounded-lg font-medium transition-colors ${
+                            currentSection === section
+                              ? "bg-indigo-100 text-indigo-700"
+                              : "text-gray-600 hover:text-indigo-600 hover:bg-indigo-50"
+                          }`}
+                        >
+                          {section.charAt(0).toUpperCase() + section.slice(1)}
+                        </button>
+                      ))}
+                      <button
+                        onClick={() => showSection("admin")}
+                        className="w-full text-left px-3 py-2 rounded-lg font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                      >
+                        Admin
+                      </button>
+                    </nav>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </header>
@@ -1324,79 +1363,81 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white text-gray-900 py-12 mt-20 border-t">
+  <footer className="bg-white text-gray-900 py-6 mt-10 border-t">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between max-w-4xl mx-auto gap-2 py-2">
             <div>
-              <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                DevLearn Pro
-              </h3>
-              <p className="text-gray-600">
-                Master web development with our interactive courses.
-              </p>
+              <h3 className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-1">DevLearn Pro</h3>
+              <p className="text-gray-600 text-xs">Master web development with our interactive courses.</p>
             </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-gray-600">
-                {["home", "courses", "dashboard", "certificate"].map((section) => (
-                  <li key={section}>
-                    <button
-                      onClick={() => showSection(section)}
-                      className="hover:text-indigo-600 transition-colors"
-                    >
-                      {section.charAt(0).toUpperCase() + section.slice(1)}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li className="flex items-center gap-2">
-                  <FaEnvelope /> chimekosisochukwu5@gmail.com
-                </li>
-                <li className="flex items-center gap-2">
-                  <FaPhone /> +1 (123) 456-7890
-                </li>
-                <li className="flex items-center gap-2">
-                  <FaMapMarkerAlt /> San Francisco, CA
-                </li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-              <div className="flex gap-4">
-                <a
-                  href="https://www.facebook.com/profile.php?id=100081971809699"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center transition-colors hover:bg-blue-100 hover:text-blue-600"
-                >
-                  <FaFacebook />
-                </a>
-                {[
-                  { icon: FaTwitter, color: "hover:text-blue-400", bg: "hover:bg-blue-50" },
-                  { icon: FaInstagram, color: "hover:text-pink-500", bg: "hover:bg-pink-50" },
-                  { icon: FaLinkedin, color: "hover:text-blue-600", bg: "hover:bg-blue-50" },
-                  { icon: FaYoutube, color: "hover:text-red-500", bg: "hover:bg-red-50" }
-                ].map(({ icon: Icon, color, bg }, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className={`w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center transition-colors ${color} ${bg}`}
-                  >
-                    <Icon />
-                  </a>
-                ))}
-              </div>
+            <div className="flex flex-row gap-4 w-full md:w-auto">
+              <Accordion type="multiple" className="flex flex-row gap-4 w-full md:w-auto">
+                <AccordionItem value="quick-links" className="min-w-[120px]">
+                  <AccordionTrigger className="py-1 text-base font-semibold">Quick Links</AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="space-y-2 text-gray-600">
+                      {["home", "courses", "dashboard", "certificate"].map((section) => (
+                        <li key={section}>
+                          <button
+                            onClick={() => showSection(section)}
+                            className="hover:text-indigo-600 transition-colors"
+                          >
+                            {section.charAt(0).toUpperCase() + section.slice(1)}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="contact-us" className="min-w-[120px]">
+                  <AccordionTrigger className="py-1 text-base font-semibold">Contact Us</AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="space-y-2 text-gray-600">
+                      <li className="flex items-center gap-2">
+                        <FaEnvelope /> chimekosisochukwu5@gmail.com
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <FaPhone /> +1 (123) 456-7890
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <FaMapMarkerAlt /> San Francisco, CA
+                      </li>
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="follow-us" className="min-w-[120px]">
+                  <AccordionTrigger className="py-1 text-base font-semibold">Follow Us</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex gap-2 flex-wrap">
+                      <a
+                        href="https://www.facebook.com/profile.php?id=100081971809699"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center transition-colors hover:bg-blue-100 hover:text-blue-600"
+                      >
+                        <FaFacebook />
+                      </a>
+                      {[
+                        { icon: FaTwitter, color: "hover:text-blue-400", bg: "hover:bg-blue-50" },
+                        { icon: FaInstagram, color: "hover:text-pink-500", bg: "hover:bg-pink-50" },
+                        { icon: FaLinkedin, color: "hover:text-blue-600", bg: "hover:bg-blue-50" },
+                        { icon: FaYoutube, color: "hover:text-red-500", bg: "hover:bg-red-50" }
+                      ].map(({ icon: Icon, color, bg }, index) => (
+                        <a
+                          key={index}
+                          href="#"
+                          className={`w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center transition-colors ${color} ${bg}`}
+                        >
+                          <Icon />
+                        </a>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
-          
-          <div className="border-t border-gray-200 pt-8 text-center text-gray-600">
+          <div className="border-t border-gray-200 pt-2 mt-2 text-center text-gray-600 text-xs">
             <p>&copy; 2023 DevLearn Pro. All rights reserved.</p>
           </div>
         </div>
